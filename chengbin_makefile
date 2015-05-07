@@ -1,0 +1,35 @@
+#define macro
+
+CC      = icpc
+CFLAGS1  = -std=c++0x 
+CFLAGS2  = -I/share/apps/openmpi-intel/1.6.4_hcoll/include -I/scratch/chengbin.wang/install/log4cpp/include -I/scratch/chengbin.wang/install/boost/include
+LDFLAGS = -llog4cpp -lmpi -lmpi_cxx -lboost_system -lboost_filesystem -lboost_date_time
+LPFLAGS = -L/share/apps/openmpi-intel/1.6.4_hcoll/lib -L/scratch/chengbin.wang/install/log4cpp/lib -L/scratch/chengbin.wang/install/boost/lib
+
+all: MpiEngine DataEngine clean
+
+MpiEngine: MpiEngine.o
+	$(CC) $(CFLAGS1) $(LPFLAGS) $(LDFLAGS) -o MpiEngine MpiEngine.o 
+DataEngine: DataEngine.o DataEngineMain.o
+	$(CC) $(CFLAGS1) $(LPFLAGS) $(LDFLAGS) -o DataEngine DataEngine.o DataEngineMain.o
+	
+
+MpiEngine.o: MpiEngine.cpp 
+	$(CC) $(CFLAGS1) $(CFLAGS2) -c -oMpiEngine.o MpiEngine.cpp
+
+DataEngineMain.o: DataEngineMain.cpp 
+	$(CC) $(CFLAGS1) $(CFLAGS2) -c -oDataEngineMain.o DataEngineMain.cpp
+DataEngine.o: DataEngine.cpp 
+	$(CC) $(CFLAGS1) $(CFLAGS2) -c -oDataEngine.o DataEngine.cpp
+Timer.o: Timer.cpp 
+	$(CC) $(CFLAGS1) $(CFLAGS2) -c -oTimer.o Timer.cpp
+Logging.o: Logging.cpp
+	$(CC) $(CFLAGS1) $(CFLAGS2) -c -oLogging.o Logging.cpp
+
+.PHONY: clean cleanest
+
+clean:
+	rm *.o
+
+cleanest: clean
+	rm MpiEngine DataEngine

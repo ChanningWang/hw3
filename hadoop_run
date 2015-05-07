@@ -1,0 +1,15 @@
+#! /bin/sh
+
+$HADOOP_HOME/bin/hadoop fs -mkdir input_dir 
+
+$HADOOP_HOME/bin/hadoop fs -put FedData.csv input_dir 
+
+$HADOOP_HOME/bin/hadoop jar mapReduce.jar HadoopEngine input_dir output_dir
+
+$HADOOP_HOME/bin/hadoop fs -cat output_dir/part-00000 
+
+
+
+#cleanup
+
+

@@ -1,0 +1,9 @@
+#! /bin/sh
+
+export LD_LIBRARY_PATH=/scratch/chengbin.wang/install/log4cpp/lib:/scratch/chengbin.wang/install/boost/lib:$LD_LIBRARY_PATH
+
+mpirun -np 20 ./MpiEngine
+
+#cleanup
+
+
